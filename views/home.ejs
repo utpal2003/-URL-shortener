@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #98D7C2;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: #e4fbeb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            padding: 3rem;
+        }
+
+        .header h1 {
+            text-align: center;
+        }
+
+        .form-section {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .form-section input {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .output {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        table {
+            width: 85%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #53d083;
+            table-layout: fixed; /* Ensures each column has a fixed width */
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            word-wrap: break-word; /* Prevents long URLs from overflowing */
+        }
+
+        /* Set specific widths for each column */
+        th:nth-child(1), td:nth-child(1) {
+            width: 10%; /* S.no column */
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            width: 25%; /* ShortId column */
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            width: 50%; /* Redirects column */
+        }
+
+        th:nth-child(4), td:nth-child(4) {
+            width: 20%; /* Clicks column */
+        }
+
+        th {
+            background-color: #2d40be;
+            color: white;
+        }
+
+        button {
+            height: 1.8rem;
+            width: 5rem;
+            border-radius: 5px;
+            background-color: rgb(125, 220, 136);
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0ed85c;
+            cursor: pointer;
+        }
+
+        .form-section input {
+            margin: 0 4px;
+            border: 2px solid black;
+            outline: none;
+            border-radius: 5px;
+            background-color: rgb(255, 255, 255);
+            color: black;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+
+            table {
+                width: 90%;
+            }
+
+            .form-section input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .form-section button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                font-size: 12px;
+                padding: 5px;
+            }
+
+            button {
+                width: 100%;
+                font-size: 14px;
+                height: 2.5rem;
+            }
+
+            .form-section label, input
+            .form-section label, input, button {
+                display: block;
+                width: 100%;
+            }
+
+            .form-section input, .form-section button {
+                margin-bottom: 10px;
+            }
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>URL SHORTENER</h1>
+            <% if (locals.id) { %>
+            <p>URL Generated: <a href="http://localhost:8000/url/<%= id %>">http://localhost:8000/url/<%= id %></a></p>
+            <% } %>
+        </div>
+
+        <div class="form-section">
+            <form method="post" action="/url">
+                <label>Enter Your URL Here:-</label>
+                <input type="text" name="url" placeholder="https://example.com">
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="output">
+        <% if (locals.urls) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>S.no</th>
+                    <th>ShortId</th>
+                    <th>Redirects</th>
+                    <th>Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach((url, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= url.shortId %></td>
+                    <td><%= url.redirectUrl %></td>
+                    <td><%= url.visithistory.length %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+</body>
+
+</html>
