@@ -15,12 +15,12 @@ async function resticttoLoggedinUseronly(req, res, next) {
 
 }
 /////////////////////
-// async function checkAuth(req,res,next) {
-//     const userid = req.cookies.uid;
-//     const user = getUser(userid);
-//     req.user = user;
-//     next();
-// }
+async function checkAuth(req,res,next) {
+    const userid = req.cookies.uid;
+    const user = getUser(userid);
+    req.user = user;
+    next();
+}
 
 // // Middleware to check authentication
 // async function checkAuth(req, res, next) {
